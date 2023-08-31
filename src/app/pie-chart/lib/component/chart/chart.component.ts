@@ -25,7 +25,7 @@ export class ChartComponent implements AfterViewInit {
   }
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private zone: NgZone,
     private _setting: SettingService
   ) {
@@ -34,12 +34,11 @@ export class ChartComponent implements AfterViewInit {
   public ngAfterViewInit() {
     // Chart code goes in here
     this.browserOnly(() => {
-      console.log();
       if (!this.id) {
         return
       }
 
-      let root = am5.Root.new('chartdiv' + this.id);
+      const root = am5.Root.new('chartdiv' + this.id);
 
       if (this._setting.roots[this.id])
         this._setting.roots[this.id].root = root;
@@ -52,14 +51,14 @@ export class ChartComponent implements AfterViewInit {
 
       root.setThemes([this.setting.theme.selected.class.new(this.root)]);
 
-      let chart = root.container.children.push(
+      const chart = root.container.children.push(
         am5percent.PieChart.new(root, this.setting.chart)
       );
 
-      let legend = chart.children.push(am5.Legend.new(root, this.setting.Legend));
+      const legend = chart.children.push(am5.Legend.new(root, this.setting.Legend));
 
       this.setting.series.forEach((el, i) => {
-        let series = chart.series.push(
+        const series = chart.series.push(
           am5percent.PieSeries.new(root, el)
         );
 

@@ -9,6 +9,8 @@ import {MatOptionModule} from '@angular/material/core';
 import {FormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {HeaderComponent} from '../../lib/component/header/header.component';
+import {FooterComponent} from '../../lib/component/footer/footer.component';
 
 @Component({
   selector: 'app-setting',
@@ -24,7 +26,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatOptionModule,
     MatSlideToggleModule,
     MatInputModule,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class SettingComponent implements OnDestroy {
@@ -33,10 +37,6 @@ export class SettingComponent implements OnDestroy {
     series?: ChartSetting['seriesRaw'][0]
   }[] = []
   private id?: string
-
-  public get setting() {
-    return this.settingService.roots[this.id!];
-  }
 
   constructor(
     private settingService: SettingService,
@@ -54,6 +54,10 @@ export class SettingComponent implements OnDestroy {
         });
       })
     })
+  }
+
+  public get setting() {
+    return this.settingService.roots[this.id!];
   }
 
   public ngOnDestroy(): void {
@@ -91,8 +95,8 @@ export class SettingComponent implements OnDestroy {
     this.fresh[seriesI].data.push(a)
   }
 
-  public updateDataField($e: any, seriesI: number, isValue: boolean, isNewSeries: boolean) {
-    const val = $e.target.value;
+  public updateDataField($e: MouseEvent, seriesI: number, isValue: boolean, isNewSeries: boolean) {
+    const val = ($e.target as HTMLInputElement).value;
     if (isNewSeries) {
       if (this.fresh[seriesI].series) {
         const key = isValue ? this.fresh[seriesI].series!.valueField : this.fresh[seriesI].series!.categoryField;
@@ -128,8 +132,8 @@ export class SettingComponent implements OnDestroy {
     if (isNew) {
       this.fresh.splice(seriesI, 1)
     } else {
-      this.setting!.seriesRaw.splice(seriesI, 1)
-      this.setting!.data.splice(seriesI, 1)
+      this.setting.seriesRaw.splice(seriesI, 1)
+      this.setting.data.splice(seriesI, 1)
     }
   }
 
