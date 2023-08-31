@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "amchart_test:build:production"
+              "browserTarget": "amchart-piechart-configurator:build:production"
             },
             "development": {
-              "browserTarget": "amchart_test:build:development"
+              "browserTarget": "amchart-piechart-configurator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "amchart_test:build"
+            "browserTarget": "amchart-piechart-configurator:build"
           }
         },
         "test": {
