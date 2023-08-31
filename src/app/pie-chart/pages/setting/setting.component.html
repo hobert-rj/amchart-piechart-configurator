@@ -1,5 +1,5 @@
 <app-header title="Pie chart settings">
-  <a (click)="back()" before>
+  <a role="button" tabindex="0" (click)="back()" (keydown)="back()" before>
       <span class="material-symbols-outlined">
         arrow_back
       </span>
@@ -7,16 +7,6 @@
 </app-header>
 
 <div class="pageCon" *ngIf="setting">
-
-  <div class="spaceBetweenFlex">
-
-
-
-    <h1>
-
-    </h1>
-
-  </div>
 
   <mat-form-field>
     <mat-label>Theme</mat-label>
@@ -54,7 +44,7 @@
   <section *ngFor="let series of setting.seriesRaw; let seriesI = index;">
 
     <ng-container [ngTemplateOutlet]="seriesTheme"
-      [ngTemplateOutletContext]="{series, seriesI, isNew: false}"></ng-container>
+                  [ngTemplateOutletContext]="{series, seriesI, isNew: false}"></ng-container>
 
   </section>
 
@@ -63,13 +53,14 @@
     <section *ngIf="item.series">
 
       <ng-container [ngTemplateOutlet]="seriesTheme"
-        [ngTemplateOutletContext]="{series:item.series, seriesI, isNew: true}"></ng-container>
+                    [ngTemplateOutletContext]="{series:item.series, seriesI, isNew: true}"></ng-container>
 
     </section>
 
   </ng-container>
 
-  <div class="centeredFlex" style="width: fit-content;" (click)="addSeries()">
+  <div role="button" tabindex="1" class="centeredFlex" style="width: fit-content;" (click)="addSeries()"
+       (keydown)="addSeries()">
     <a class="add">
       <span class="material-symbols-outlined">
         add
@@ -81,9 +72,10 @@
 
   <ng-template #seriesTheme let-series="series" let-seriesI="seriesI" let-isNewSeries="isNew">
 
-    <h2>Series {{seriesI+1}}</h2>
+    <h2>Series {{seriesI + 1}}</h2>
 
-    <div class="centeredFlex" style="width: fit-content;" (click)="deleteSeries(seriesI, isNewSeries)">
+    <div role="button" tabindex="2" (click)="deleteSeries(seriesI, isNewSeries)"
+         (keydown)="deleteSeries(seriesI, isNewSeries)" class="centeredFlex" style="width: fit-content;">
       <a class="delete">
         <span class="material-symbols-outlined">
           delete
@@ -95,79 +87,85 @@
 
     <mat-form-field>
       <mat-label>Series Category Field Name</mat-label>
-      <input matInput [value]="series.categoryField" (input)="updateDataField($event,seriesI, false, isNewSeries)"
-        type="text">
+      <input matInput [value]="series.categoryField" (input)="updateDataField($any($event),seriesI, false, isNewSeries)"
+             type="text">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Series Value Field Name</mat-label>
-      <input matInput [value]="series.valueField" (input)="updateDataField($event,seriesI, true, isNewSeries)"
-        type="text">
+      <input matInput [value]="series.valueField" (input)="updateDataField($any($event),seriesI, true, isNewSeries)"
+             type="text">
     </mat-form-field>
 
     <ng-container *ngIf="series.categoryField&&series.valueField">
 
-      <h3>Series {{seriesI+1}} Data</h3>
+      <h3>Series {{seriesI + 1}} Data</h3>
 
       <table class="responsive-table">
 
         <thead class="responsive-table__head">
-          <tr class="responsive-table__row">
-            <th class="responsive-table__head__title">
-              {{series.categoryField}}
-            </th>
+        <tr class="responsive-table__row">
+          <th class="responsive-table__head__title">
+            {{series.categoryField}}
+          </th>
 
-            <th class="responsive-table__head__title">
-              {{series.valueField}}
-            </th>
+          <th class="responsive-table__head__title">
+            {{series.valueField}}
+          </th>
 
-            <th class="responsive-table__head__title"></th>
-          </tr>
+          <th class="responsive-table__head__title"></th>
+        </tr>
         </thead>
 
         <tbody class="responsive-table__body">
-          <tr class="responsive-table__row" *ngFor="let item of setting.data[seriesI]; let i = index">
-            <ng-container [ngTemplateOutlet]="dataCells"
-              [ngTemplateOutletContext]="{item,i,isNew:false}"></ng-container>
-          </tr>
+        <tr class="responsive-table__row" *ngFor="let item of setting.data[seriesI]; let i = index">
+          <ng-container [ngTemplateOutlet]="dataCells"
+                        [ngTemplateOutletContext]="{item,i,isNew:false}"></ng-container>
+        </tr>
 
-          <tr class="responsive-table__row" *ngFor="let item of fresh[seriesI].data; let i = index">
-            <ng-container [ngTemplateOutlet]="dataCells" [ngTemplateOutletContext]="{item,i,isNew:true}"></ng-container>
-          </tr>
+        <tr class="responsive-table__row" *ngFor="let item of fresh[seriesI].data; let i = index">
+          <ng-container [ngTemplateOutlet]="dataCells" [ngTemplateOutletContext]="{item,i,isNew:true}"></ng-container>
+        </tr>
 
-          <ng-template #dataCells let-item="item" let-i="i" let-isNew="isNew">
-            <td class="responsive-table__body__text">
-              <label>{{series.categoryField}}</label>
+        <ng-template #dataCells let-item="item" let-i="i" let-isNew="isNew">
+          <td class="responsive-table__body__text">
+            <label [for]="'cell-category-input'+seriesI.toString()+i.toString()">{{series.categoryField}}</label>
 
-              <span>
+            <span>
                 <mat-form-field>
-                  <input matInput [(ngModel)]="item[series.categoryField]" type="text" required="true">
+                  <input matInput [(ngModel)]="item[series.categoryField]" type="text"
+                         [id]="'cell-category-input'+seriesI.toString()+i.toString()"
+                         required="true">
                 </mat-form-field>
               </span>
-            </td>
+          </td>
 
-            <td class="responsive-table__body__text">
-              <label>{{series.valueField}}</label>
+          <td class="responsive-table__body__text">
+            <label [for]="'cell-value-input'+seriesI.toString()+i.toString()">{{series.valueField}}</label>
 
-              <span>
+            <span>
                 <mat-form-field>
-                  <input matInput [(ngModel)]="item[series.valueField]" type="number" required="true">
+                  <input matInput [(ngModel)]="item[series.valueField]" type="number"
+                         [id]="'cell-value-input'+seriesI.toString()+i.toString()"
+                         required="true">
                 </mat-form-field>
               </span>
-            </td>
+          </td>
 
-            <td class="responsive-table__body__text">
-              <a class="delete" (click)="deleteData(seriesI, i,isNew)">
+          <td class="responsive-table__body__text">
+            <a role="button" tabindex="3" (click)="deleteData(seriesI, i,isNew)"
+               (keydown)="deleteData(seriesI, i,isNew)" class="delete">
                 <span class="material-symbols-outlined">
                   delete
                 </span>
-              </a>
-            </td>
-          </ng-template>
+            </a>
+          </td>
+        </ng-template>
 
         </tbody>
 
-        <div class="centeredFlex" style="width: fit-content;" (click)="addData(seriesI, isNewSeries)">
+        <div role="button" tabindex="4" (click)="addData(seriesI, isNewSeries)"
+             (keydown)="addData(seriesI, isNewSeries)" class="centeredFlex" style="width: fit-content;">
           <a class="add">
             <span class="material-symbols-outlined">
               add

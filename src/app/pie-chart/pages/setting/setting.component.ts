@@ -95,8 +95,8 @@ export class SettingComponent implements OnDestroy {
     this.fresh[seriesI].data.push(a)
   }
 
-  public updateDataField($e: any, seriesI: number, isValue: boolean, isNewSeries: boolean) {
-    const val = $e.target.value;
+  public updateDataField($e: MouseEvent, seriesI: number, isValue: boolean, isNewSeries: boolean) {
+    const val = ($e.target as HTMLInputElement).value;
     if (isNewSeries) {
       if (this.fresh[seriesI].series) {
         const key = isValue ? this.fresh[seriesI].series!.valueField : this.fresh[seriesI].series!.categoryField;
@@ -132,8 +132,8 @@ export class SettingComponent implements OnDestroy {
     if (isNew) {
       this.fresh.splice(seriesI, 1)
     } else {
-      this.setting!.seriesRaw.splice(seriesI, 1)
-      this.setting!.data.splice(seriesI, 1)
+      this.setting.seriesRaw.splice(seriesI, 1)
+      this.setting.data.splice(seriesI, 1)
     }
   }
 

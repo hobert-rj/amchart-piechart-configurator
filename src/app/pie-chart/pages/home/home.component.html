@@ -46,7 +46,7 @@
       <a [routerLink]="['setting', chart]">
         <span class="material-symbols-outlined">settings</span>
       </a>
-      <a class="delete" (click)="delete(chart)">
+      <a role="button" tabindex="0" (click)="delete(chart)" (keydown)="delete(chart)" class="delete">
         <span class="material-symbols-outlined">delete</span>
       </a>
     </div>

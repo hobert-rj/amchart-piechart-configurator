@@ -24,7 +24,7 @@ export class HomeComponent {
   public charts;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private zone: NgZone,
     private settingService: SettingService
   ) {
