@@ -8,9 +8,10 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import {ChartSetting} from 'src/app/pie-chart/types/chart-setting';
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+    selector: 'app-chart',
+    templateUrl: './chart.component.html',
+    styleUrls: ['./chart.component.scss'],
+    standalone: true
 })
 export class ChartComponent implements AfterViewInit {
   @Input() id?: string;
