@@ -1,13 +1,31 @@
-import { Component, OnDestroy } from '@angular/core';
-import { SettingService } from '../../services/setting.service';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { ChartSetting } from '../../types/chart-setting';
+import {Component, OnDestroy} from '@angular/core';
+import {SettingService} from '../../services/setting.service';
+import {ActivatedRoute} from '@angular/router';
+import {Location, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
+import {ChartSetting} from '../../types/chart-setting';
+import {MatInputModule} from '@angular/material/input';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatOptionModule} from '@angular/material/core';
+import {FormsModule} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.scss']
+  styleUrls: ['./setting.component.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    NgFor,
+    MatOptionModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    NgTemplateOutlet
+  ]
 })
 export class SettingComponent implements OnDestroy {
   public fresh: {
@@ -51,7 +69,7 @@ export class SettingComponent implements OnDestroy {
     })
   }
 
-  public back(){
+  public back() {
     this.location.back();
   }
 

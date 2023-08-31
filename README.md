@@ -19,7 +19,7 @@ You can try out the canvas-web-paint by visiting [🔗 this link](https://hobert
 
 ## Getting Started
 
-This project was built using the [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8. To get started:
+This project was built using the [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1. To get started:
 
 1. Clone the repository: 
 ```bash
@@ -31,7 +31,7 @@ cd amchart-piechart-configurable
 ```
 3. Install dependencies: 
 ```bash
-npm install
+yarn install
 ```
 
 4. After installation, run this command for a development server, and open your browser to `http://localhost:4200/`. The application will automatically reload as you make changes.
