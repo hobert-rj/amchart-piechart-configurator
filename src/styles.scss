@@ -1,6 +1,4 @@
-// You can add global styles to this file, and also import other style files
-
-$small-device-max-width: 700px;
+@import "src/theme/variable";
 
 // Responsive Breakpoint SCSS Mixin:
 @mixin small-device {
@@ -15,13 +13,9 @@ $small-device-max-width: 700px;
   }
 }
 
-$color-border: #d0d0d0;
-$color-hover: #dbe2ff;
-$color-delete: red;
-$color-add-bg: #00d406;
-$color-add-text: white;
-$color-toolbar-bg: #1976d2;
-$color-toolbar-text: white;
+html {
+  --mdc-filled-text-field-container-color: transparent;
+}
 
 html, body {
   height: 100%;
@@ -225,27 +219,10 @@ svg.material-icons {
   }
 }
 
-.toolbar {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  background-color: $color-toolbar-bg;
-  color: $color-toolbar-text;
-  font-weight: 600;
-  gap: 1em;
-  padding: 1em;
 
-  #twitter-logo,
-  #youtube-logo {
-    height: 40px;
-    margin: 0 8px;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
+// reset
 
 .mat-form-field {
   max-width: 100%;
 }
+
