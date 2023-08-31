@@ -1,20 +1,18 @@
-import { Component, Inject, Input, NgZone, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { SettingService } from '../../../services/setting.service';
+import {AfterViewInit, Component, Inject, Input, NgZone, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {SettingService} from '../../../services/setting.service';
 
 // amCharts imports
 import * as am5 from '@amcharts/amcharts5';
 import * as am5percent from '@amcharts/amcharts5/percent';
-import { ChartSetting } from 'src/app/pie-chart/types/chart-setting';
-
+import {ChartSetting} from 'src/app/pie-chart/types/chart-setting';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-
-export class ChartComponent {
+export class ChartComponent implements AfterViewInit {
   @Input() id?: string;
 
   get root() {
@@ -29,7 +27,8 @@ export class ChartComponent {
     @Inject(PLATFORM_ID) private platformId: Object,
     private zone: NgZone,
     private _setting: SettingService
-  ) { }
+  ) {
+  }
 
   public ngAfterViewInit() {
     // Chart code goes in here
