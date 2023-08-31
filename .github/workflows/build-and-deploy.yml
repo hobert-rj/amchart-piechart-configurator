@@ -42,10 +42,10 @@ jobs:
         run: npm run test -- --configuration=production
 
       - name: Build Angular Project
-        run: npm run build:prod
+        run: npm run build:prod -- --base-href /${{ github.repository }}/
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: eaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/amchart-piechart-configurator
