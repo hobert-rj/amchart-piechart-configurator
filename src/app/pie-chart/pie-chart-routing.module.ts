@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { SettingComponent } from './pages/setting/setting.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
   },
   {
     path: 'setting/:id',
-    component: SettingComponent
+    loadComponent: () => import('./pages/setting/setting.component').then(c => c.SettingComponent)
   }
 ];
 
