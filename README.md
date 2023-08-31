@@ -13,6 +13,10 @@ This project showcases an Angular application designed to provide users with a h
 - **Customization:** Tailor chart appearances to your preferences with options like structure, labels, and themes.
 - **Theme Switching:** Toggle between different themes to explore how each one transforms the visual impact of your charts.
 
+## Demo
+
+You can try out the canvas-web-paint by visiting [🔗 this link](https://hobert-rj.github.io/amchart-piechart-configurator/).
+
 ## Getting Started
 
 This project was built using the [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8. To get started:
