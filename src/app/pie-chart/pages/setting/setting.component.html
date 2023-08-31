@@ -1,0 +1,218 @@
+<div class="toolbar" role="banner">
+  <a (click)="back()">
+      <span class="material-symbols-outlined">
+        arrow_back
+      </span>
+  </a>
+
+  <img
+    width="40"
+    alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+  />
+  <span>Pie Chart Setting</span>
+</div>
+
+<div class="pageCon" *ngIf="setting">
+
+  <div class="spaceBetweenFlex">
+
+
+
+    <h1>
+
+    </h1>
+
+  </div>
+
+  <mat-form-field>
+    <mat-label>Theme</mat-label>
+    <mat-select [(ngModel)]="setting.theme.selectedIndex">
+      <mat-option *ngFor="let item of setting.theme.list; let i = index" [value]="i">
+        {{item.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle *ngIf="setting.theme.selectedIndex===0" [(ngModel)]="setting.theme.hasAnimation">
+    Animation
+  </mat-slide-toggle>
+
+  <mat-form-field>
+    <mat-label>Radius</mat-label>
+    <input matInput [(ngModel)]="setting.chartRaw.radius" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Inner Radius</mat-label>
+    <input matInput [(ngModel)]="setting.chartRaw.innerRadius" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Start Angle</mat-label>
+    <input matInput [(ngModel)]="setting.chartRaw.startAngle" type="number" min="-90" max="270">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>End Angle</mat-label>
+    <input matInput [(ngModel)]="setting.chartRaw.endAngle" type="number" min="-90" max="270">
+  </mat-form-field>
+
+  <section *ngFor="let series of setting.seriesRaw; let seriesI = index;">
+
+    <ng-container [ngTemplateOutlet]="seriesTheme"
+      [ngTemplateOutletContext]="{series, seriesI, isNew: false}"></ng-container>
+
+  </section>
+
+  <ng-container *ngFor="let item of fresh; let seriesI = index;">
+
+    <section *ngIf="item.series">
+
+      <ng-container [ngTemplateOutlet]="seriesTheme"
+        [ngTemplateOutletContext]="{series:item.series, seriesI, isNew: true}"></ng-container>
+
+    </section>
+
+  </ng-container>
+
+  <div class="centeredFlex" style="width: fit-content;" (click)="addSeries()">
+    <a class="add">
+      <span class="material-symbols-outlined">
+        add
+      </span>
+    </a>
+
+    Add new series
+  </div>
+
+  <ng-template #seriesTheme let-series="series" let-seriesI="seriesI" let-isNewSeries="isNew">
+
+    <h2>Series {{seriesI+1}}</h2>
+
+    <div class="centeredFlex" style="width: fit-content;" (click)="deleteSeries(seriesI, isNewSeries)">
+      <a class="delete">
+        <span class="material-symbols-outlined">
+          delete
+        </span>
+      </a>
+
+      Delete Series
+    </div>
+
+    <mat-form-field>
+      <mat-label>Series Category Field Name</mat-label>
+      <input matInput [value]="series.categoryField" (input)="updateDataField($event,seriesI, false, isNewSeries)"
+        type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Series Value Field Name</mat-label>
+      <input matInput [value]="series.valueField" (input)="updateDataField($event,seriesI, true, isNewSeries)"
+        type="text">
+    </mat-form-field>
+
+    <ng-container *ngIf="series.categoryField&&series.valueField">
+
+      <h3>Series {{seriesI+1}} Data</h3>
+
+      <table class="responsive-table">
+
+        <thead class="responsive-table__head">
+          <tr class="responsive-table__row">
+            <th class="responsive-table__head__title">
+              {{series.categoryField}}
+            </th>
+
+            <th class="responsive-table__head__title">
+              {{series.valueField}}
+            </th>
+
+            <th class="responsive-table__head__title"></th>
+          </tr>
+        </thead>
+
+        <tbody class="responsive-table__body">
+          <tr class="responsive-table__row" *ngFor="let item of setting.data[seriesI]; let i = index">
+            <ng-container [ngTemplateOutlet]="dataCells"
+              [ngTemplateOutletContext]="{item,i,isNew:false}"></ng-container>
+          </tr>
+
+          <tr class="responsive-table__row" *ngFor="let item of fresh[seriesI].data; let i = index">
+            <ng-container [ngTemplateOutlet]="dataCells" [ngTemplateOutletContext]="{item,i,isNew:true}"></ng-container>
+          </tr>
+
+          <ng-template #dataCells let-item="item" let-i="i" let-isNew="isNew">
+            <td class="responsive-table__body__text">
+              <label>{{series.categoryField}}</label>
+
+              <span>
+                <mat-form-field>
+                  <input matInput [(ngModel)]="item[series.categoryField]" type="text" required="true">
+                </mat-form-field>
+              </span>
+            </td>
+
+            <td class="responsive-table__body__text">
+              <label>{{series.valueField}}</label>
+
+              <span>
+                <mat-form-field>
+                  <input matInput [(ngModel)]="item[series.valueField]" type="number" required="true">
+                </mat-form-field>
+              </span>
+            </td>
+
+            <td class="responsive-table__body__text">
+              <a class="delete" (click)="deleteData(seriesI, i,isNew)">
+                <span class="material-symbols-outlined">
+                  delete
+                </span>
+              </a>
+            </td>
+          </ng-template>
+
+        </tbody>
+
+        <div class="centeredFlex" style="width: fit-content;" (click)="addData(seriesI, isNewSeries)">
+          <a class="add">
+            <span class="material-symbols-outlined">
+              add
+            </span>
+          </a>
+
+          Add new data field
+        </div>
+
+      </table>
+
+    </ng-container>
+
+  </ng-template>
+
+  <mat-form-field>
+    <mat-label>Inner Radius</mat-label>
+    <input matInput [(ngModel)]="setting.chartRaw.innerRadius" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Legend Center X</mat-label>
+    <input matInput [(ngModel)]="setting.legendRaw.centerX" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Legend Center Y</mat-label>
+    <input matInput [(ngModel)]="setting.legendRaw.centerY" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Legend X</mat-label>
+    <input matInput [(ngModel)]="setting.legendRaw.x" type="number" min="0" max="100">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Legend Y</mat-label>
+    <input matInput [(ngModel)]="setting.legendRaw.y" type="number" min="0" max="100">
+  </mat-form-field>
+
+</div>

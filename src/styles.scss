@@ -1,0 +1,245 @@
+// You can add global styles to this file, and also import other style files
+
+$mobile-xxs-max-width: 500px;
+
+// Responsive Breakpoint SCSS Mixin:
+@mixin mobile-xxs {
+  @media (max-width: #{$mobile-xxs-max-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$mobile-xxs-max-width + 1}) {
+    @content;
+  }
+}
+
+$color-border: #d0d0d0;
+$color-hover: #dbe2ff;
+$color-delete: red;
+$color-add-bg: #00d406;
+$color-add-text: white;
+$color-toolbar-bg: #1976d2;
+$color-toolbar-text: white;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  &.borderedTable {
+    table {
+      border: 1px solid $color-border;
+    }
+  }
+}
+
+/* Responsive Table Style */
+.responsive-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+
+  &__row {
+    border-bottom: 1px solid $color-border;
+    padding: 0 1.5em;
+
+    th,
+    td {
+      padding: 1em;
+    }
+
+    @include desktop {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__head {
+    @include desktop {
+      display: none;
+    }
+
+    &__title {
+      align-items: center;
+      font-weight: 500;
+      text-transform: capitalize;
+      text-align: start;
+
+      @include desktop {
+        display: flex;
+      }
+    }
+
+    th {
+      font-weight: 650;
+    }
+  }
+
+  &__body {
+    .responsive-table__row {
+      transition: 0.1s linear;
+      transition-property: color, background;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: $color-hover;
+
+        &::ng-deep {
+          textarea,
+          input {
+            color: #000;
+          }
+        }
+      }
+    }
+
+    &__text {
+      flex-wrap: wrap;
+      align-items: center;
+      flex: 1 0 20em;
+      overflow-wrap: anywhere;
+
+      span {
+        text-align: end;
+        flex: 1;
+        max-width: 100%;
+        min-width: fit-content;
+      }
+
+      label {
+        font-weight: 600;
+        text-transform: capitalize;
+        display: none;
+      }
+
+      @include desktop {
+        display: flex;
+        justify-content: space-between;
+        gap: 0 1em;
+
+        label {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.centeredFlex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.spaceBetweenFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageCon {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-content: stretch;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.delete {
+  color: $color-delete;
+  cursor: pointer;
+}
+
+.add {
+  color: $color-add-text;
+  cursor: pointer;
+  background: $color-add-bg;
+  width: 2em;
+  height: 2em;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1em;
+  margin: 1em;
+}
+
+a {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+
+  &:visited,
+  &:hover {
+    color: inherit;
+  }
+
+  &:hover {
+    filter: hue-rotate(45deg);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 8px 0;
+}
+
+p {
+  margin: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+svg.material-icons {
+  height: 24px;
+  width: auto;
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.toolbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: $color-toolbar-bg;
+  color: $color-toolbar-text;
+  font-weight: 600;
+  gap: 1em;
+  padding: 1em;
+
+  #twitter-logo,
+  #youtube-logo {
+    height: 40px;
+    margin: 0 8px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+h2, h3 {
+  margin: 0;
+}
+
+section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-content: stretch;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  width: 100%;
+  padding: 1em;
+  border: 1px solid #d4d4d4;
+  border-radius: 1em;
+}
